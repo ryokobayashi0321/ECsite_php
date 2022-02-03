@@ -18,14 +18,37 @@ if (isset($_SESSION['login']) === false) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スタッフの追加</title>
+    <title>スタッフ編集画面</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    スタッフ追加<br><br>
-    <form action="staff_add_check.php" method="post">
+<?php
+
+try {
+    $code = $_GET['code'];
+
+    require_once('../common/common.php');
+    $dbh = dbConnect();
+    $sql = 'SELECT code, name FROM mst_staff WHERE code=?';
+    $stmt = $dbh->prepare($sql);
+    $data[] = $code;
+    $stmt->execute($data);
+
+    $dbh = null;
+
+    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+
+} catch (Exception $e) {
+    echo '只今障害が発生しております。' . PHP_EOL;
+    echo '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+}
+?>
+    スタッフコード<br>
+    <?php echo $rec['code']; ?>の情報を修正します。
+    <br><br>
+    <form action="staff_edit_check.php" method="post">
         スタッフ名<br>
-        <input type="text" name="name">
+        <input type="text" name="name" value="<?php echo $rec['name']; ?>">
         <br><br>
         パスワード<br>
         <input type="password" name="pass">
@@ -33,6 +56,7 @@ if (isset($_SESSION['login']) === false) {
         パスワード再入力<br>
         <input type="password" name="pass2">
         <br><br>
+        <input type="hidden" name="code" value="<?php echo $rec['code']; ?>">
         <input type="button" onclick="history.back()" value="戻る">
         <input type="submit" value="OK">
     </form>

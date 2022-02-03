@@ -18,31 +18,38 @@ if (isset($_SESSION['login']) === false) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スタッフ追加チェック</title>
+    <title>スタッフ編集チェック</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+
 <?php
 
 require_once('../common/common.php');
 
 $post = sanitize($_POST);
-$name = $post['name'];
-$pass = $post['pass'];
-$pass2 = $post['pass2'];
+$code = $_POST['code'];
+$name = $_POST['name'];
+$pass = $_POST['pass'];
+$pass2 = $_POST['pass2'];
+
+echo 'スタッフコード<br>';
+echo $code . 'の情報を修正します';
+echo '<br><br>';
 
 if (empty($name) === true) {
     echo '名前が入力されていません' . PHP_EOL;
 } else {
-    echo $name . PHP_EOL;
+    echo 'スタッフ名：' . $name;
+    echo '<br><br>';
 }
 
 if (empty($pass) === true) {
-    echo 'パスワードが入力されていません' . PHP_EOL;
+    echo 'パスワードが入力されていません。' . PHP_EOL;
 }
 
 if ($pass !== $pass2) {
-    echo 'パスワードが異なります' . PHP_EOL;
+    echo 'パスワードが異なります。' . PHP_EOL;
 }
 
 if (empty($name) or empty($pass) or $pass !== $pass2) {
@@ -51,14 +58,16 @@ if (empty($name) or empty($pass) or $pass !== $pass2) {
     echo '</form>';
 } else {
     $pass = md5($pass);
-    echo '上記のスタッフを追加しますか？' . PHP_EOL;
-    echo '<form action="staff_add_done.php" method="post">';
+    echo '上記の通りに修正しますか？' . PHP_EOL;
+    echo '<form action="staff_edit_done.php" method="post">';
     echo '<input type="hidden" name="name" value="'.$name.'">';
     echo '<input type="hidden" name="pass" value="'.$pass.'">';
+    echo '<input type="hidden" name="code" value="'.$code.'">';
     echo '<input type="button" onclick="history.back()" value="戻る">';
     echo '<input type="submit" value="OK">';
     echo '</form>';
 }
 ?>
+
 </body>
 </html>

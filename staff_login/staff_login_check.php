@@ -21,8 +21,8 @@ try {
     $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (empty($rec['name']) === true) {
-        print '入力が間違っています' . PHP_EOL;
-        print "<a href='staff_login.html'>戻る</a>";
+        echo '入力が間違っています' . PHP_EOL;
+        echo '<a href="staff_login.html">戻る</a>';
         exit();
     } else {
         session_start();
@@ -34,6 +34,6 @@ try {
     }
 
 } catch (Exception $e) {
-    print '只今障害が発生しております。' . PHP_EOL;
-    print "<a href='staff_login.html'>戻る</a>";
+    echo '只今障害が発生しております。' . PHP_EOL;
+    echo '<a href="staff_login.html">戻る</a>';
 }

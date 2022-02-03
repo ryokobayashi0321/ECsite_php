@@ -3,12 +3,12 @@
 session_start();
 session_regenerate_id(true);
 if (isset($_SESSION['login']) === false) {
-    print 'ログインしていません。' . PHP_EOL;
-    print "<a href='staff_login.html'>ログイン画面へ</a>";
+    echo 'ログインしていません。' . PHP_EOL;
+    echo '<a href="staff_login.html">ログイン画面へ</a>';
     exit();
 } else {
-    print $_SESSION['name'] . 'さんログイン中';
-    print "<br><br>";
+    echo $_SESSION['name'] . 'さんログイン中';
+    echo '<br><br>';
 }
 ?>
 
@@ -34,26 +34,26 @@ try {
 
     $dbh = null;
 
-    print 'スタッフ一覧<br><br>';
-    print "<form action='staff_branch.php' method='post'>";
+    echo 'スタッフ一覧<br><br>';
+    echo '<form action="staff_branch.php" method="post">';
 
     while (true) {
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($rec === false) {
             break;
         }
-        print "<input type='radio' name='code' value='".$rec['code']."'>";
-        print $rec['name'];
-        print "<br>";
+        echo '<input type="radio" name="code" value="'.$rec['code'].'">';
+        echo $rec['name'];
+        echo '<br>';
     }
-    print "<br>";
-    print "<input type='submit' name='show' value='詳細'>";
-    print "<input type='submit' name='add' value='追加'>";
-    print "<input type='submit' name='edit' value='修正'>";
-    print "<input type='submit' name='delete' value='削除'>";
+    echo '<br>';
+    echo '<input type="submit" name="show" value="詳細">';
+    echo '<input type="submit" name="add" value="追加">';
+    echo '<input type="submit" name="edit" value="編集">';
+    echo '<input type="submit" name="delete" value="削除">';
 } catch (Exception $e) {
-    print '只今障害が発生しております。' . PHP_EOL;
-    print "<a href='../staff_login.html'>ログイン画面へ</a>";
+    echo '只今障害が発生しております。' . PHP_EOL;
+    echo '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
 }
 ?>
 <br><br>
