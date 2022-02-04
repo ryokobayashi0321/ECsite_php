@@ -20,3 +20,14 @@ function dbConnect()
 
     return $dbh;
 }
+
+function pulldown_cate()
+{
+    echo '<select name="cate">';
+    echo '<option value="食品">食品</option>';
+    echo '<option value="家電">家電</option>';
+    echo '<option value="書籍">書籍</option>';
+    echo '<option value="日用品">日用品</option>';
+    echo '<option value="その他">その他</option>';
+    echo '</select>';
+}
