@@ -18,7 +18,7 @@ if (isset($_SESSION['login']) === false) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品修正実行</title>
+    <title>商品詳細</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -26,46 +26,47 @@ if (isset($_SESSION['login']) === false) {
 <?php
 
 try {
+    $code = $_GET['code'];
+
     require_once('../common/common.php');
-
-    $post = sanitize($_POST);
-    $code = $post['code'];
-    $name = $post['name'];
-    $price = $post['price'];
-    $img = $post['img'];
-    $old_img = $post['old_img'];
-    $comments = $post['explanation'];
-    $cate = $post['cate'];
-
-    if (empty($img) && isset($old_img) === true) {
-        $img = $old_img;
-    }
-
-    if ($old_img !== '') {
-        if ($img !== $old_img) {
-            unlink('./img/' . $old_img);
-        }
-    }
-
     $dbh = dbConnect();
-    $sql = 'UPDATE mst_product SET category=?, name=?, price=?, img=?, explanation=? WHERE code=?';
+    $sql = 'SELECT * FROM mst_product WHERE code=?';
     $stmt = $dbh->prepare($sql);
-    $data[] = $cate;
-    $data[] = $name;
-    $data[] = $price;
-    $data[] = $img;
-    $data[] = $comments;
     $data[] = $code;
     $stmt->execute($data);
 
     $dbh = null;
+
+    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
 } catch (Exception $e) {
     echo '只今障害が発生しております。' . PHP_EOL;
     echo '<a href ="../staff_login/staff_login.html">ログイン画面へ</a>';
 }
 ?>
-    商品を修正しました。<br><br>
-    <a href="pro_list.php">商品一覧へ</a>
+    商品詳細<br><br>
+    商品コード<br>
+    <?php echo $rec['code']; ?>
+    <br><br>
+    カテゴリー<br>
+    <?php echo $rec['category']; ?>
+    <br><br>
+    商品名<br>
+    <?php echo $rec['name']; ?>
+    <br><br>
+    画像<br>
+    <?php if (empty($rec['img']) === true) {
+        $show_img = '';
+    } else {
+        $show_img = '<img src="./img/'.$rec['img'].'">';
+    }; ?>
+    <?php echo $show_img; ?>
+    <br><br>
+    詳細<br>
+    <?php echo $rec['explanation']; ?>
+    <br><br>
+    <form>
+        <input type="button" onclick="history.back()" value="戻る">
+    </form>
 </body>
 </html>
