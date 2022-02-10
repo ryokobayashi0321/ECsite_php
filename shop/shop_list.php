@@ -63,7 +63,7 @@ try {
 
 } catch (Exception $e) {
     echo '只今障害が発生しております。' . PHP_EOL;
-    echo '<a href ="../staff_login/staff_login.html">ログイン画面へ</a>';
+    echo '<a href ="../member_login/member_login_db.php">ログイン画面へ</a>';
 }
 ?>
 
