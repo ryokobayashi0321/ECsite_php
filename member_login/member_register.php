@@ -10,7 +10,7 @@
 <body>
     新規会員登録画面<br><br>
 
-    <form action="member_login_db_check.php" method="post">
+    <form action="member_register_check.php" method="post">
         お名前<br>
         <input type="text" name="name">
         <br>

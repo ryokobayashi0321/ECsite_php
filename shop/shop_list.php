@@ -4,9 +4,9 @@ session_start();
 session_regenerate_id(true);
 
 if (isset($_SESSION['member_login']) === true) {
-    echo 'ようこそ';
+    echo 'ようこそ、';
     echo $_SESSION['member_name'];
-    echo '様';
+    echo '様' . PHP_EOL;
     echo '<a href="../member_login/member_logout.php">ログアウト</a>';
     echo '<br><br>';
 }
@@ -63,7 +63,7 @@ try {
 
 } catch (Exception $e) {
     echo '只今障害が発生しております。' . PHP_EOL;
-    echo '<a href ="../member_login/member_login_db.php">ログイン画面へ</a>';
+    echo '<a href ="../member_login/member_login.html">ログイン画面へ</a>';
 }
 ?>
 

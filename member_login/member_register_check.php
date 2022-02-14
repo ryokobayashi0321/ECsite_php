@@ -70,7 +70,7 @@ if ($okFlag === false) {
     echo $email . '<br><br>';
     echo $address . '<br><br>';
     echo $tel . '<br><br>';
-    echo '<form action="member_login_db_done.php" method="post">';
+    echo '<form action="member_register_done.php" method="post">';
     echo '<input type="hidden" name="name" value="'.$name.'">';
     echo '<input type="hidden" name="email" value="'.$email.'">';
     echo '<input type="hidden" name="address" value="'.$address.'">';

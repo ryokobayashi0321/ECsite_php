@@ -41,7 +41,7 @@ try {
 
     if (in_array($email, $mail) === true) {
         echo '既に使われているmailアドレスです<br><br>';
-        echo '<a href="member_login_db.php">トップへ戻る</a>';
+        echo '<a href="member_register.php">トップへ戻る</a>';
         $dbh = null;
     } else {
         $sql = 'INSERT INTO member(name, email, address, tel, password) VALUE (?, ?, ?, ?, ?)';
@@ -60,7 +60,7 @@ try {
     }
 } catch (Exception $e) {
     echo '只今障害が発生しております。' . PHP_EOL;
-    echo '<a href ="member_login_db.php">ログイン画面へ</a>';
+    echo '<a href ="member_register.php">ログイン画面へ</a>';
     exit();
 }
 ?>
