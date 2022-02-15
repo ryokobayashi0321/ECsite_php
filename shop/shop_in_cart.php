@@ -48,7 +48,6 @@ if (empty($_SESSION['cart']) === true or in_array($code, $cart) === false) {
     $_SESSION['cart'] = $cart;
     $_SESSION['num'] = $num;
 
-    var_dump($_SESSION);
     echo 'カートに追加しました<br><br>';
     echo '<a href="shop_list.php">商品一覧へ戻る</a>';
 }
