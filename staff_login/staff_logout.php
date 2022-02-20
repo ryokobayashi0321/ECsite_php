@@ -16,7 +16,6 @@ include('../layouts/header.php');
         ログアウトしました。<br><br>
         <a href="staff_login.php">ログイン画面へ</a>
     </main>
-    <?php include('../layouts/aside.php'); ?>
 </div>
 
 <?php include('../layouts/footer.php'); ?>

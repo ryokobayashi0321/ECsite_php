@@ -17,7 +17,6 @@ include('../layouts/header.php');
       <input type="submit" value="OK">
     </form>
   </main>
-    <?php include('../layouts/aside.php'); ?>
 </div>
 
 <?php include('../layouts/footer.php'); ?>

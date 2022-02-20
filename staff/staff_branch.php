@@ -1,44 +1,57 @@
 <?php
 
-session_start();
-session_regenerate_id(true);
-if (isset($_SESSION['login']) === false) {
-    echo 'ログインしていません。' . PHP_EOL;
-    echo '<a href="staff_login.php">ログイン画面へ</a>';
-    exit();
-}
+$title = 'スタッフチェック';
+include('../layouts/header.php');
+?>
 
-if (isset($_POST['add']) === true) {
-    header('Location:staff_add.php');
-    exit();
-}
+<div class="container">
+    <main>
+    <?php
 
-if (isset($_POST['show']) === true) {
-    if (isset($_POST['code']) === false) {
-        header('Location:staff_ng.php');
+    session_start();
+    session_regenerate_id(true);
+    if (isset($_SESSION['login']) === false) {
+        echo 'ログインしていません。' . PHP_EOL;
+        echo '<a href="staff_login.php">ログイン画面へ</a>';
         exit();
     }
-    $code = $_POST['code'];
-    header('Location:staff_show.php?code=' . $code);
-    exit();
-}
 
-if (isset($_POST['edit']) === true) {
-    if (isset($_POST['code']) === false) {
-        header('Location:staff_ng.php');
+    if (isset($_POST['add']) === true) {
+        header('Location:staff_add.php');
         exit();
     }
-    $code = $_POST['code'];
-    header('Location:staff_edit.php?code=' . $code);
-    exit();
-}
 
-if (isset($_POST['delete']) === true) {
-    if (isset($_POST['code']) === false) {
-        header('Location:staff_ng.php');
+    if (isset($_POST['show']) === true) {
+        if (isset($_POST['code']) === false) {
+            header('Location:staff_ng.php');
+            exit();
+        }
+        $code = $_POST['code'];
+        header('Location:staff_show.php?code=' . $code);
         exit();
     }
-    $code = $_POST['code'];
-    header('Location:staff_delete.php?code=' . $code);
-    exit();
-}
+
+    if (isset($_POST['edit']) === true) {
+        if (isset($_POST['code']) === false) {
+            header('Location:staff_ng.php');
+            exit();
+        }
+        $code = $_POST['code'];
+        header('Location:staff_edit.php?code=' . $code);
+        exit();
+    }
+
+    if (isset($_POST['delete']) === true) {
+        if (isset($_POST['code']) === false) {
+            header('Location:staff_ng.php');
+            exit();
+        }
+        $code = $_POST['code'];
+        header('Location:staff_delete.php?code=' . $code);
+        exit();
+    }
+    ?>
+    </main>
+</div>
+
+<?php include('../layouts/footer.php'); ?>

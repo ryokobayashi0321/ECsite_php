@@ -47,7 +47,6 @@ include('../layouts/header.php');
     }
     ?>
     </main>
-    <?php include('../layouts/aside.php'); ?>
 </div>
 
 <?php include('../layouts/footer.php'); ?>
