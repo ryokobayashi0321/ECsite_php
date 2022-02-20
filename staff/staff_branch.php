@@ -4,7 +4,7 @@ session_start();
 session_regenerate_id(true);
 if (isset($_SESSION['login']) === false) {
     echo 'ログインしていません。' . PHP_EOL;
-    echo '<a href="staff_login.html">ログイン画面へ</a>';
+    echo '<a href="staff_login.php">ログイン画面へ</a>';
     exit();
 }
 

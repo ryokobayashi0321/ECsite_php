@@ -57,7 +57,7 @@ include('../layouts/header.php');
 
     } catch (Exception $e) {
         echo '只今障害が発生しております。' . PHP_EOL;
-        echo '<a href ="../member_login/member_login.html">ログイン画面へ</a>';
+        echo '<a href ="../member_login/member_login.php">ログイン画面へ</a>';
     }
     ?>
     <p class="top_btn"><a href="shop_list.php">トップへ戻る</a></p>

@@ -60,7 +60,7 @@ include('../layouts/header.php');
 
     } catch (\Throwable $th) {
         echo "只今障害が発生しております。<br><br>";
-        echo "<a href='../staff_login/staff_login.html'>ログイン画面へ</a>";
+        echo "<a href='../staff_login/staff_login.php'>ログイン画面へ</a>";
     }
     ?>
         <a href="shop_list.php">トップへ戻る</a>

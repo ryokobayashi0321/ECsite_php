@@ -1,39 +1,53 @@
 <?php
 
-try {
-    require_once('../common/common.php');
+$title = 'ログインチェック';
+include('../layouts/header.php');
+?>
 
-    $post = sanitize($_POST);
-    $code = $post['code'];
-    $pass = $post['pass'];
+<div class="container">
+    <main>
+    <?php
 
-    $pass = md5($pass);
+    try {
+        require_once('../common/common.php');
 
-    $dbh = dbConnect();
-    $sql = 'SELECT name FROM mst_staff WHERE code=? AND password=?';
-    $stmt = $dbh->prepare($sql);
-    $data[] = $code;
-    $data[] = $pass;
-    $stmt->execute($data);
+        $post = sanitize($_POST);
+        $code = $post['code'];
+        $pass = $post['pass'];
 
-    $dbh = null;
+        $pass = md5($pass);
 
-    $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+        $dbh = dbConnect();
+        $sql = 'SELECT name FROM mst_staff WHERE code=? AND password=?';
+        $stmt = $dbh->prepare($sql);
+        $data[] = $code;
+        $data[] = $pass;
+        $stmt->execute($data);
 
-    if (empty($rec['name']) === true) {
-        echo '入力が間違っています' . PHP_EOL;
-        echo '<a href="staff_login.html">戻る</a>';
-        exit();
-    } else {
-        session_start();
-        $_SESSION['login'] = 1;
-        $_SESSION['name'] = $rec['name'];
-        $_SESSION['code'] = $code;
-        header('Location:staff_login_top.php');
-        exit();
+        $dbh = null;
+
+        $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($rec['name']) === true) {
+            echo '入力が間違っています' . PHP_EOL;
+            echo '<a href="staff_login.php">戻る</a>';
+            exit();
+        } else {
+            session_start();
+            $_SESSION['login'] = 1;
+            $_SESSION['name'] = $rec['name'];
+            $_SESSION['code'] = $code;
+            header('Location:staff_login_top.php');
+            exit();
+        }
+
+    } catch (Exception $e) {
+        echo '只今障害が発生しております。' . PHP_EOL;
+        echo '<a href="staff_login.php">戻る</a>';
     }
+    ?>
+    </main>
+    <?php include('../layouts/aside.php'); ?>
+</div>
 
-} catch (Exception $e) {
-    echo '只今障害が発生しております。' . PHP_EOL;
-    echo '<a href="staff_login.html">戻る</a>';
-}
+<?php include('../layouts/footer.php'); ?>

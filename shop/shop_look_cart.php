@@ -13,7 +13,7 @@ include('../layouts/header.php');
 
     if (!isset($_SESSION['member_login'])) {
         echo 'ログインしてください<br><br>';
-        echo '<a href="../member_login/member_login.html">ログイン画面へ</a>';
+        echo '<a href="../member_login/member_login.php">ログイン画面へ</a>';
         echo '<br><br>';
         echo '<a href="shop_list.php">TOP画面へ</a>';
     exit();
@@ -53,7 +53,7 @@ include('../layouts/header.php');
 
     } catch (Exception $e) {
         echo '只今障害が発生しております。' . PHP_EOL;
-        echo '<a href ="../staff_login/staff_login.html">ログイン画面へ</a>';
+        echo '<a href ="../staff_login/staff_login.php">ログイン画面へ</a>';
     }
     ?>
         <form action="shop_num.php" method="post">
