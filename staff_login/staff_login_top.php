@@ -19,9 +19,8 @@ include('../layouts/header.php');
     <?php endif; ?>
 
         <h3>管理画面TOP</h3><br>
-        <a href="../staff/staff_list.php">スタッフ管理</a>
-        <br><br>
-        <a href="../product/pro_list.php">商品管理</a>
+        <a class="btn" href="../staff/staff_list.php">スタッフ管理</a>
+        <a class="btn_slc" href="../product/pro_list.php">商品管理</a>
         <br><br>
         <a href="staff_logout.php">ログアウト</a>
     </main>

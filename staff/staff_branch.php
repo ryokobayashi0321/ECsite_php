@@ -9,7 +9,6 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-
     <?php if (!isset($_SESSION['login'])): ?>
         <div class="error">ログインしていません。</div><br>
         <a href="staff_login.php">ログイン画面へ</a>

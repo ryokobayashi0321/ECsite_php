@@ -1,20 +1,21 @@
 <?php
 
+session_start();
+session_regenerate_id(true);
+
 $title = '商品チェック';
 include('../layouts/header.php');
 ?>
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['login'])): ?>
+        <div class="error">ログインしていません。</div><br>
+        <a href="staff_login.php">ログイン画面へ</a>
+        <?php exit(); ?>
+    <?php endif; ?>
 
-    session_start();
-    session_regenerate_id(true);
-    if (isset($_SESSION['login']) === false) {
-        echo 'ログインしていません。' . PHP_EOL;
-        echo '<a href="staff_login.php">ログイン画面へ</a>';
-        exit();
-    }
+    <?php
 
     if (isset($_POST['add']) === true) {
         header('Location:pro_add.php');

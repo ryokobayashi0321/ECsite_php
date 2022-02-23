@@ -39,7 +39,7 @@ include('../layouts/header.php');
         echo '<a href="../staff_login/staff_login.php">ログイン画面へ</a>';
     }
     ?>
-        削除が完了しました。<br><br>
+        <div class="text">削除が完了しました。</div><br>
         <a href="staff_list.php">スタッフ一覧へ</a>
     </main>
 </div>

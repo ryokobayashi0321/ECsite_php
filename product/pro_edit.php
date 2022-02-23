@@ -1,23 +1,24 @@
 <?php
 
+session_start();
+session_regenerate_id(true);
+
 $title = '商品編集画面';
 include('../layouts/header.php');
 ?>
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['login'])): ?>
+        <div class="error">ログインしていません。</div><br>
+        <a href="staff_login.php">ログイン画面へ</a>
+        <?php exit(); ?>
+    <?php else: ?>
+        <?php echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL; ?>
+        <br><br>
+    <?php endif; ?>
 
-    session_start();
-    session_regenerate_id(true);
-    if (isset($_SESSION['login']) === false) {
-        echo 'ログインしていません。' . PHP_EOL;
-        echo '<a href="staff_login.php">ログイン画面へ</a>';
-        exit();
-    } else {
-        echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL;
-        echo '<br><br>';
-    }
+    <?php
 
     try {
         $code = $_GET['code'];
@@ -44,33 +45,32 @@ include('../layouts/header.php');
         echo '<a href ="../staff_login/staff_login.php">ログイン画面へ</a>';
     }
     ?>
-        商品コード<br>
-        <?php echo $rec['code']; ?>
-        の情報を修正します。
-        <br><br>
+        <h3>商品コード</h3><br>
+        <div>【<?php echo $rec['code']; ?>】の情報を修正します。</div>
+        <br>
         <form action="pro_edit_check.php" method="post" enctype="multipart/form-data">
-            カテゴリー<br>
+            <div>【カテゴリー】</div>
             <?php require_once('../common/common.php'); ?>
             <?php echo pulldown_cate(); ?>
             <br><br>
-            商品名<br>
+            <div>【商品名】</div>
             <input type="text" name="name" value="<?php echo $rec['name']; ?>">
             <br><br>
-            価格<br>
+            <div>【価格】</div>
             <input type="text" name="price" value="<?php echo $rec['price']; ?>">
             <br><br>
-            画像<br>
+            <div>【画像】</div>
             <?php echo $show_img; ?>
             <br>
             <input type="file" name="img">
             <br><br>
-            詳細<br>
-            <textarea name="comments" style="width: 500px; height: 100px;"><?php echo $rec['explanation']; ?></textarea>
+            <div>【詳細】</div>
+            <textarea name="comments" class="textarea"><?php echo $rec['explanation']; ?></textarea>
             <br><br>
             <input type="hidden" name="code" value="<?php echo $rec['code']; ?>">
             <input type="hidden" name="old_img" value="<?php echo $rec['img']; ?>">
-            <input type="button" onclick="history.back()" value="戻る">
-            <input type="submit" value="OK">
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+            <input class="btn" type="submit" value="OK">
         </form>
     </main>
 </div>

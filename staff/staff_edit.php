@@ -43,13 +43,13 @@ include('../layouts/header.php');
         <div><?php echo $rec['code']; ?>の情報を修正します。</div>
         <br>
         <form action="staff_edit_check.php" method="post">
-            スタッフ名<br>
+            <div>スタッフ名</div>
             <input type="text" name="name" value="<?php echo $rec['name']; ?>">
             <br><br>
-            パスワード<br>
+            <div>パスワード</div>
             <input type="password" name="pass">
             <br><br>
-            パスワード再入力<br>
+            <div>パスワード再入力</div>
             <input type="password" name="pass2">
             <br><br>
             <input type="hidden" name="code" value="<?php echo $rec['code']; ?>">

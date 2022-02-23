@@ -41,10 +41,10 @@ include('../layouts/header.php');
     ?>
         <h3>スタッフ詳細</h3>
         <br>
-        <div>スタッフコード：</div>
+        <div>【スタッフコード】</div>
         <?php echo $rec['code']; ?>
         <br><br>
-        <div>スタッフ名：</div>
+        <div>【スタッフ名】</div>
         <?php echo $rec['name']; ?>
         <br><br>
         <p>上記情報を削除しますか？</p>

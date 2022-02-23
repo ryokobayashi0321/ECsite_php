@@ -37,7 +37,7 @@ include('../layouts/header.php');
     <?php if (empty($name) === true): ?>
         <div class="error">名前が入力されていません。</div>
     <?php else: ?>
-        <?php echo 'スタッフ名：' . $name; ?>
+        <div>スタッフ名：<?php echo $name; ?></div>
     <?php endif; ?>
 
     <?php if (empty($pass) === true): ?>

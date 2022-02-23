@@ -100,6 +100,11 @@ a:hover {
   text-align: center;
 }
 
+.textarea {
+  width: 500px;
+  height: 100px;
+}
+
 
 .back_btn {
   display       : inline-block;

@@ -43,8 +43,8 @@ include('../layouts/header.php');
     }
     ?>
 
-        <div>修正完了しました。</div><br>
-        <a href="staff_list.php">スタッフ一覧へ</a>
+        <div class="text">修正完了しました。</div><br>
+        <a class="back_btn" href="staff_list.php">スタッフ一覧へ</a>
     </main>
 </div>
 

@@ -1,23 +1,24 @@
 <?php
 
+session_start();
+session_regenerate_id(true);
+
 $title = '商品詳細';
 include('../layouts/header.php');
 ?>
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['login'])): ?>
+        <div class="error">ログインしていません。</div><br>
+        <a href="staff_login.php">ログイン画面へ</a>
+        <?php exit(); ?>
+    <?php else: ?>
+        <?php echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL; ?>
+        <br><br>
+    <?php endif; ?>
 
-    session_start();
-    session_regenerate_id(true);
-    if (isset($_SESSION['login']) === false) {
-        echo 'ログインしていません。' . PHP_EOL;
-        echo '<a href="staff_login.php">ログイン画面へ</a>';
-        exit();
-    } else {
-        echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL;
-        echo '<br><br>';
-    }
+    <?php
 
     try {
         $code = $_GET['code'];
@@ -38,29 +39,26 @@ include('../layouts/header.php');
         echo '<a href ="../staff_login/staff_login.php">ログイン画面へ</a>';
     }
     ?>
-        商品詳細<br><br>
-        商品コード<br>
-        <?php echo $rec['code']; ?>
-        <br><br>
-        カテゴリー<br>
-        <?php echo $rec['category']; ?>
-        <br><br>
-        商品名<br>
-        <?php echo $rec['name']; ?>
-        <br><br>
-        画像<br>
-        <?php if (empty($rec['img']) === true) {
-            $show_img = '';
-        } else {
-            $show_img = '<img src="./img/'.$rec['img'].'">';
-        }; ?>
+        <h3>商品詳細</h3>
+        <br>
+        <div>【商品コード】<?php echo $rec['code']; ?></div>
+        <br>
+        <div>【カテゴリー】<?php echo $rec['category']; ?></div>
+        <br>
+        <div>【商品名】<?php echo $rec['name']; ?></div>
+        <br>
+        <div>【画像】</div>
+        <?php if (empty($rec['img']) === true): ?>
+            <?php $show_img = ''; ?>
+        <?php else: ?>
+            <?php $show_img = '<img src="./img/'.$rec['img'].'">'; ?>
+        <?php endif; ?>
         <?php echo $show_img; ?>
         <br><br>
-        詳細<br>
-        <?php echo $rec['explanation']; ?>
+        <div>【詳細】<?php echo $rec['explanation']; ?></div>
         <br><br>
         <form>
-            <input type="button" onclick="history.back()" value="戻る">
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
         </form>
     </main>
 </div>

@@ -53,7 +53,7 @@ include('../layouts/header.php');
             <input class="btn_slc" type="submit" name="delete" value="削除">
         </form>
         <br><br>
-        <a href="../staff_login/staff_login_top.php">管理画面TOPへ</a>
+        <a class="back_btn" href="../staff_login/staff_login_top.php">管理画面TOPへ</a>
     </main>
 </div>
 

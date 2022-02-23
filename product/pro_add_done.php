@@ -1,23 +1,24 @@
 <?php
 
+session_start();
+session_regenerate_id(true);
+
 $title = '商品追加実行';
 include('../layouts/header.php');
 ?>
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['login'])): ?>
+        <div class="error">ログインしていません。</div><br>
+        <a href="staff_login.php">ログイン画面へ</a>
+        <?php exit(); ?>
+    <?php else: ?>
+        <?php echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL; ?>
+        <br><br>
+    <?php endif; ?>
 
-    session_start();
-    session_regenerate_id(true);
-    if (isset($_SESSION['login']) === false) {
-        echo 'ログインしていません。' . PHP_EOL;
-        echo '<a href="staff_login.php">ログイン画面へ</a>';
-        exit();
-    } else {
-        echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL;
-        echo '<br><br>';
-    }
+    <?php
 
     try {
         require_once('../common/common.php');
@@ -47,8 +48,8 @@ include('../layouts/header.php');
         exit();
     }
     ?>
-        商品を追加しました。<br><br>
-        <a href="product_list.php">商品一覧へ</a>
+        <div class="text">商品を追加しました。</div><br>
+        <a class="back_btn" href="pro_list.php">商品一覧へ</a>
     </main>
 </div>
 

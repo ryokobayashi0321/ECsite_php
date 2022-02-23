@@ -20,13 +20,13 @@ include('../layouts/header.php');
 
         <h3>スタッフ追加</h3><br>
         <form action="staff_add_check.php" method="post">
-            <div>スタッフ名</div>
+            <div>【スタッフ名】</div>
             <input type="text" name="name">
             <br><br>
-            <div>パスワード</div>
+            <div>【パスワード】</div>
             <input type="password" name="pass">
             <br><br>
-            <div>パスワード再入力</div>
+            <div>【パスワード再入力】</div>
             <input type="password" name="pass2">
             <br><br>
             <input class="back_btn" type="button" onclick="history.back()" value="戻る">

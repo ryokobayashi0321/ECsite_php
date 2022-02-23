@@ -1,23 +1,24 @@
 <?php
 
+session_start();
+session_regenerate_id(true);
+
 $title = '商品追加チェック';
 include('../layouts/header.php');
 ?>
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['login'])): ?>
+        <div class="error">ログインしていません。</div><br>
+        <a href="staff_login.php">ログイン画面へ</a>
+        <?php exit(); ?>
+    <?php else: ?>
+        <?php echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL; ?>
+        <br><br>
+    <?php endif; ?>
 
-    session_start();
-    session_regenerate_id(true);
-    if (isset($_SESSION['login']) === false) {
-        echo 'ログインしていません。' . PHP_EOL;
-        echo '<a href="staff_login.php">ログイン画面へ</a>';
-        exit();
-    } else {
-        echo $_SESSION['name'] . 'さんログイン中' . PHP_EOL;
-        echo '<br><br>';
-    }
+    <?php
 
     require_once('../common/common.php');
 
@@ -28,63 +29,64 @@ include('../layouts/header.php');
     $comments = $post['comments'];
     $cate = $post['cate'];
 
-    echo $cate . PHP_EOL;
-
-    if (empty($name) === true) {
-        echo '商品名が入力されていません。' . PHP_EOL;
-    } else {
-        echo $name;
-        echo '<br><br>';
-    }
-
-    // 正規表現されていれば１となり、ＮＧなら0、preg_match(正規表現、正規表現したい値）
-    if (preg_match("/\A[0-9]+\z/", $price) === 0) {
-        echo '正しい値を入力してください' . PHP_EOL;
-    } else {
-        echo $price . '円';
-        echo '<br><br>';
-    }
-
-    if ($img['size'] > 0) {
-        if ($img['size'] > 1000000) {
-            echo 'ファイルのサイズが大きすぎます' . PHP_EOL;
-        } else {
-            move_uploaded_file($img['tmp_name'], './img/' . $img['name']);
-            echo '<img src="./img/'.$img['name'].'">';
-            echo '<br><br>';
-        }
-    }
-
-    if (empty($comments) === true) {
-        echo '詳細が入力されていません' . PHP_EOL;
-        echo '<br><br>';
-    }
-
-    if (mb_strlen($comments) > 100) {
-        echo '文字数は100文字が上限です' . PHP_EOL;
-        echo '<br><br>';
-    } else {
-        echo $comments;
-        echo '<br><br>';
-    }
-
-    if (empty($name) or preg_match("/\A[0-9]+\z/", $price) === 0 or $img['size'] > 1000000 or empty($comments) or mb_strlen($comments) > 100) {
-        echo '<form>';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-        echo '</form>';
-    } else {
-        echo '上記商品を追加しますか？' . PHP_EOL;
-        echo '<form action="pro_add_done.php" method="post">';
-        echo '<input type="hidden" name="cate" value="'.$cate.'">';
-        echo '<input type="hidden" name="name" value="'.$name.'">';
-        echo '<input type="hidden" name="price" value="'.$price.'">';
-        echo '<input type="hidden" name="img" value="'.$img['name'].'">';
-        echo '<input type="hidden" name="comments" value="'.$comments.'">';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-        echo '<input type="submit" value="OK">';
-        echo '</form>';
-    }
     ?>
+
+    <h3>商品追加チェック</h3><br>
+    <div>【カテゴリー】<?php echo $cate; ?></div>
+    <br>
+
+    <?php if (empty($name) === true): ?>
+        <div class="error">【商品名】商品名が入力されていません。</div>
+    <?php else: ?>
+            <div>【商品名】<?php echo $name; ?></div>
+    <?php endif; ?>
+    <br>
+
+    <?php if (preg_match('/\A[0-9]+\z/', $price) === 0): ?>
+        <div class="error">【価格】正しい値を入力してください</div>
+    <?php else: ?>
+        <div>【価格】<?php echo $price; ?>円</div>
+    <?php endif; ?>
+    <br>
+
+    <div>【画像】</div>
+    <?php if ($img['size'] > 0): ?>
+        <?php if ($img['size'] > 1000000): ?>
+            <div class="error">【画像】ファイルのサイズが大きすぎます。</div>
+        <?php else: ?>
+            <?php move_uploaded_file($img['tmp_name'], './img/' .$img['name']); ?>
+            <div><img src="./img/<?php echo $img['name']; ?>"></div>
+        <?php endif ?>
+    <?php endif ?>
+
+    <div>【詳細】</div>
+    <?php if (empty($comments) === true): ?>
+        <div class="error">詳細が入力されていません</div>
+    <?php endif; ?>
+
+    <?php if (mb_strlen($comments) > 100): ?>
+        <div class="error">文字数は100文字が上限です</div>
+    <?php else: ?>
+        <div><?php echo $comments; ?></div>
+    <?php endif; ?>
+    <br><br>
+
+    <?php if (empty($name) or preg_match('/\A[0-9]+\z/', $price) === 0 or $img['size'] > 1000000 or empty($comments) === true or mb_strlen($comments) > 100): ?>
+        <form>
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+        </form>
+    <?php else: ?>
+        <div>上記商品を追加しますか？</div><br>
+        <form action="pro_add_done.php" method="post">
+        <input type="hidden" name="cate" value="<?php echo $cate; ?>">
+        <input type="hidden" name="name" value="<?php echo $name; ?>">
+        <input type="hidden" name="price" value="<?php echo $price; ?>">
+        <input type="hidden" name="img" value="<?php echo $img['name']; ?>">
+        <input type="hidden" name="comments" value="<?php echo $comments; ?>">
+        <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+        <input class="btn" type="submit" value="OK">
+        </form>
+    <?php endif; ?>
     </main>
 </div>
 

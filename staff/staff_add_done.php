@@ -42,8 +42,8 @@ include('../layouts/header.php');
     }
     ?>
 
-    スタッフを追加しました。<br><br>
-    <a href="staff_list.php">スタッフ一覧へ</a>
+    <div class="text">スタッフを追加しました。</div><br>
+    <a class="back_btn" href="staff_list.php">スタッフ一覧へ</a>
     </main>
 </div>
 
