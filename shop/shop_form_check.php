@@ -9,19 +9,19 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['member_login'])): ?>
+        <div class="error">ログインしてください</div><br><br>
+        <a class="btn" href="../member_login/member_login.php">ログイン画面へ</a>
+        <a class="back_btn" href="shop_list.php">TOP画面へ</a>
+        <?php exit(); ?>
+    <?php elseif (isset($_SESSION['member_login'])): ?>
+        <?php echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL; ?>
+        <a href="../member_login/member_logout.php">ログアウト</a>
+        <br><br>
+    <?php endif; ?>
 
-    if (!isset($_SESSION['member_login'])) {
-        echo 'ログインしてください<br><br>';
-        echo '<a href="../member_login/member_login.php">ログイン画面へ</a>';
-        echo '<br><br>';
-        echo '<a href="shop_list.php">TOP画面へ</a>';
-        exit();
-    } else if (isset($_SESSION['member_login'])) {
-        echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL;
-        echo '<a href="../member_login/member_logout.php">ログアウト</a>';
-        echo '<br><br>';
-    }
+    <h3>【ご注文内容】</h3><br>
+    <?php
 
     try {
         $member_code = $_SESSION['member_code'];
@@ -38,18 +38,11 @@ include('../layouts/header.php');
 
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        echo '下記の内容でよろしいでしょうか？<br><br>';
-        echo '【宛先】<br>';
-        echo 'お名前: ' . $rec['name'] . '様<br>';
-        echo 'email: ' . $rec['email'] . '<br>';
-        echo 'ご住所: ' . $rec['address'] . '<br>';
-        echo 'ご連絡先: ' . $rec['tel'] . '<br><br>';
         $name = $rec['name'];
         $email = $rec['email'];
         $address = $rec['address'];
         $tel = $rec['tel'];
 
-        echo '【ご注文内容】<br>';
         for ($i = 0; $i < $max; $i++) {
             $sql = 'SELECT * FROM mst_product WHERE code=?';
             $stmt = $dbh->prepare($sql);
@@ -78,21 +71,21 @@ include('../layouts/header.php');
         }
         $dbh = null;
 
-        echo '【ご請求額】--- ' . array_sum($total) . '円<br><br>';
-        echo '<form action="shop_form_done.php" method="post">';
-        echo '<input type="hidden" name="name" value="'.$name.'">';
-        echo '<input type="hidden" name="email" value="'.$email.'">';
-        echo '<input type="hidden" name="address" value="'.$address.'">';
-        echo '<input type="hidden" name="tel" value="'.$tel.'">';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-        echo '<input type="submit" value="OK">';
-        echo '</form>';
-
     } catch (Exception $e) {
         echo "只今障害が発生しております。<br><br>";
         echo "<a href='../staff_login/staff_login.php'>ログイン画面へ</a>";
     }
     ?>
+        <h3>【ご請求額】 </h3>
+        <p> --- ¥ <?php echo array_sum($total); ?> 円</p><br><br>
+        <form action="shop_form_done.php" method="post">
+            <input type="hidden" name="name" value="">
+            <input type="hidden" name="email" value="<?php echo $email; ?>">
+            <input type="hidden" name="address" value="<?php echo $address; ?>">
+            <input type="hidden" name="tel" value="<?php echo $tel; ?>">
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+            <input class="btn" type="submit" value="OK">
+        </form>
     </main>
     <?php include('../layouts/aside.php'); ?>
 </div>

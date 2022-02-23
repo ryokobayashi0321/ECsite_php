@@ -6,15 +6,15 @@ include('../layouts/header.php');
 
 <div class="container">
   <main>
-    スタッフのログイン<br><br>
+    <h3>スタッフのログイン</h3><br>
     <form action="staff_login_check.php" method="post">
-      スタッフコード<br>
+      <div>スタッフコード</div>
       <input type="text" name="code">
       <br><br>
-      パスワード<br>
+      <div>パスワード</div>
       <input type="password" name="pass">
       <br><br>
-      <input type="submit" value="OK">
+      <input class="btn" type="submit" value="OK">
     </form>
   </main>
 </div>

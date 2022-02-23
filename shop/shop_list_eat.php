@@ -9,13 +9,13 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-    <?php
+    <?php if (isset($_SESSION['member_login'])): ?>
+        <?php echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL; ?>
+        <a href="../member_login/member_logout.php">ログアウト</a>
+        <br><br>
+    <?php endif; ?>
 
-    if (isset($_SESSION['member_login']) === true) {
-        echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL;
-        echo '<a href="../member_login/member_logout.php">ログアウト</a>';
-        echo '<br><br>';
-    }
+    <?php
 
     try {
         require_once('../common/common.php');
@@ -27,43 +27,47 @@ include('../layouts/header.php');
 
         $dbh = null;
 
-        echo '販売商品一覧' . PHP_EOL;
-        echo '<a href="shop_look_cart.php">カートを見る</a>';
-        echo '<br><br>';
-
-        while (true) {
-            $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($rec === false) {
-                break;
-            } else {
-                $code = $rec['code'];
-                echo '<a href="shop_product.php?code='.$code.'">';
-            }
-
-            if (empty($rec['img']) === true) {
-                $img = '';
-            } else {
-                $img = '<img src="../product/img/'.$rec['img'].'">';
-            }
-            echo '<div class="box">';
-            echo '<div class="list">';
-            echo '<div class="img">' . $img . '</div>';
-            echo '<br>';
-            echo '商品名：' . $rec['name'];
-            echo '<br>';
-            echo '価格：' . $rec['price'] . '円';
-            echo '<br>';
-            echo '詳細：' . $rec['explanation'];
-            echo '</div></div></a>';
-            echo '<br><br>';
-        }
-
     } catch (\Throwable $th) {
         echo "只今障害が発生しております。<br><br>";
         echo "<a href='../staff_login/staff_login.php'>ログイン画面へ</a>";
     }
     ?>
-        <a href="shop_list.php">トップへ戻る</a>
+
+        <h3>販売商品一覧</h3><br>
+        <a class="btn_slc" href="shop_look_cart.php">カートを見る</a>
+        <br><br>
+
+        <?php while (true): ?>
+            <?php $rec = $stmt->fetch(PDO::FETCH_ASSOC); ?>
+            <?php if ($rec === false): ?>
+                <?php break; ?>
+                <div class="pro_ng">これ以下には商品が登録されておりません。</div><br>
+            <?php else: ?>
+                <?php $code = $rec['code']; ?>
+                <a href="shop_show_pro.php?code=<?php echo $code; ?>">
+            <?php endif; ?>
+
+                    <?php if (empty($rec['img']) === true): ?>
+                        <?php $img = ''; ?>
+                    <?php else: ?>
+                        <?php $img = '<img src="../product/img/'.$rec['img'].'">'; ?>
+                    <?php endif; ?>
+
+                    <div class="box">
+                        <div class="list">
+                            <div class="img"><?php echo $img; ?></div>
+                            <br>
+                            <div class="npe">
+                                <div>商品名：<?php echo $rec['name']; ?></div>
+                                <div>価格：<?php echo $rec['price']; ?>円</div>
+                                <div>詳細：<?php echo $rec['explanation']; ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            <br><br>
+        <?php endwhile; ?>
+        <p class="top_btn"><a class="back_btn" href="shop_list.php">トップへ戻る</a></p>
     </main>
     <?php include('../layouts/aside.php'); ?>
 </div>

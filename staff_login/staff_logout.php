@@ -13,7 +13,7 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-        ログアウトしました。<br><br>
+        <div>ログアウトしました。</div><br>
         <a href="staff_login.php">ログイン画面へ</a>
     </main>
 </div>

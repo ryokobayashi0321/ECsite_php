@@ -9,13 +9,13 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-    <?php
+    <?php if (isset($_SESSION['member_login'])): ?>
+        <?php echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL; ?>
+        <a href="../member_login/member_logout.php">ログアウト</a>
+        <br><br>
+    <?php endif; ?>
 
-    if (isset($_SESSION['member_login']) === true) {
-        echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL;
-        echo '<a href="../member_login/member_logout.php">ログアウト</a>';
-        echo '<br><br>';
-    }
+    <?php
 
     try {
         $code = $_GET['code'];
@@ -31,35 +31,34 @@ include('../layouts/header.php');
 
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (empty($rec['img']) === true) {
-            $show_img = '';
-        } else {
-            $show_img = '<img src="../product/img/'.$rec['img'].'">';
-        }
     } catch (Exception $e) {
         echo '只今障害が発生しております。' . PHP_EOL;
         echo '<a href ="../member_login/member_register.php">ログイン画面へ</a>';
     }
     ?>
 
-        <a href="shop_in_cart.php?code=<?php echo $code; ?>">カートに入れる</a>
+    <?php if (empty($rec['img']) === true): ?>
+        <?php $show_img = ''; ?>
+    <?php else: ?>
+        <?php $show_img = '<img src="../product/img/'.$rec['img'].'">'; ?>
+    <?php endif; ?>
+
+        <a class="btn" href="shop_in_cart.php?code=<?php echo $code; ?>">カートに入れる</a>
         <br><br>
         <div class="box">
             <div class="list">
                 <div class="img"><?php echo $show_img; ?></div>
                 <br>
                 <div class="npe">
-                商品名:<?php echo $rec['name']; ?>
-                <br>
-                価格:<?php echo $rec['price']; ?>円
-                <br>
-                詳細:<?php echo $rec['explanation']; ?>
+                    <div>商品名：<?php echo $rec['name']; ?></div>
+                    <div>価格：<?php echo $rec['price']; ?>円</div>
+                    <div>詳細：<?php echo $rec['explanation']; ?></div>
                 </div>
             </div>
         </div>
         <br><br>
         <form>
-            <input type="button" onclick="history.back()" value="戻る">
+            <p class="top_btn"><a class="back_btn" href="shop_list.php">トップへ戻る</a></p>
         </form>
     </main>
     <?php include('../layouts/aside.php'); ?>

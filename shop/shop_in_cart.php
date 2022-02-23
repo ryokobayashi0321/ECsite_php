@@ -9,42 +9,41 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-    <?php
 
-    if (!isset($_SESSION['member_login'])) {
-        echo 'ログインしてください<br><br>';
-        echo '<a href="../member_login/member_login.php">ログイン画面へ</a>';
-        echo '<br><br>';
-        echo '<a href="shop_list.php">TOP画面へ</a>';
-        exit();
-    } else if (isset($_SESSION['member_login'])) {
-        echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL;
-        echo '<a href="../member_login/member_logout.php">ログアウト</a>';
-        echo '<br><br>';
-    }
+    <?php if (!isset($_SESSION['member_login'])): ?>
+        <div class="error text">ログインしてください</div><br><br>
+        <a class="btn" href="../member_login/member_login.php">ログイン画面へ</a>
+        <a class="back_btn" href="shop_list.php">TOP画面へ</a>
+        <?php exit(); ?>
+    <?php elseif (isset($_SESSION['member_login'])): ?>
+        <?php echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL; ?>
+        <a href="../member_login/member_logout.php">ログアウト</a>
+        <br><br>
+    <?php endif; ?>
 
-    $code = $_GET['code'];
+    <?php $code = $_GET['code']; ?>
 
-    if (isset($_SESSION['cart']) === true) {
-        $cart = $_SESSION['cart'];
-        $num = $_SESSION['num'];
+    <?php if (isset($_SESSION['cart']) === true): ?>
+        <?php
+            $cart = $_SESSION['cart'];
+            $num = $_SESSION['num'];
+        ?>
+        <?php if (in_array($code, $cart) === true): ?>
+            <p class="error text">既にカートに登録されています</p><br><br>
+            <a class="back_btn" href="shop_list.php">商品一覧へ戻る</a>
+        <?php endif; ?>
+    <?php endif; ?>
 
-        if (in_array($code, $cart) === true) {
-            echo '既にカートにあります<br><br>';
-            echo '<a href="shop_list.php">商品一覧へ戻る</a>';
-        }
-    }
-
-    if (empty($_SESSION['cart']) === true or in_array($code, $cart) === false) {
-        $cart[] = $code;
-        $num[] = 1;
-        $_SESSION['cart'] = $cart;
-        $_SESSION['num'] = $num;
-
-        echo 'カートに追加しました<br><br>';
-        echo '<a href="shop_list.php">商品一覧へ戻る</a>';
-    }
-    ?>
+    <?php if (empty($_SESSION['cart']) === true or in_array($code, $cart) === false): ?>
+        <?php
+            $cart[] = $code;
+            $num[] = 1;
+            $_SESSION['cart'] = $cart;
+            $_SESSION['num'] = $num;
+        ?>
+        <p class="text">カートに追加しました</p><br><br>
+        <p class="top_btn"><a class="back_btn" href="shop_list.php">トップへ戻る</a></p>
+    <?php endif; ?>
     </main>
     <?php include('../layouts/aside.php'); ?>
 </div>

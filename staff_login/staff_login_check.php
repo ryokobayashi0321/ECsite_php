@@ -24,28 +24,31 @@ include('../layouts/header.php');
         $data[] = $pass;
         $stmt->execute($data);
 
-        $dbh = null;
-
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (empty($rec['name']) === true) {
-            echo '入力が間違っています' . PHP_EOL;
-            echo '<a href="staff_login.php">戻る</a>';
-            exit();
-        } else {
-            session_start();
-            $_SESSION['login'] = 1;
-            $_SESSION['name'] = $rec['name'];
-            $_SESSION['code'] = $code;
-            header('Location:staff_login_top.php');
-            exit();
-        }
+        $dbh = null;
 
     } catch (Exception $e) {
         echo '只今障害が発生しております。' . PHP_EOL;
         echo '<a href="staff_login.php">戻る</a>';
     }
     ?>
+
+        <?php if (empty($rec['name']) === true): ?>
+            <div class="error">入力が間違っています</div><br>
+            <a href="staff_login.php">戻る</a>
+            <?php exit(); ?>
+        <?php else: ?>
+            <?php
+
+            session_start();
+            $_SESSION['login'] = 1;
+            $_SESSION['name'] = $rec['name'];
+            $_SESSION['code'] = $code;
+            header('Location:staff_login_top.php');
+            exit();
+            ?>
+        <?php endif;?>
     </main>
 </div>
 

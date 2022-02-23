@@ -92,6 +92,81 @@ a:hover {
   padding: 10px;
 }
 
+.error {
+  color: red;
+}
+
+.pro_ng, .text {
+  text-align: center;
+}
+
+
+.back_btn {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 18pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 5px 5px;   /* 余白       */
+  background    : gray;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  box-shadow    : 3px 3px 3px #666666;  /* 影の設定 */
+  border        : 2px solid gray;
+  margin: 5px;
+}
+
+.btn {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 18pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 5px 5px;   /* 余白       */
+  background    : #000066;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  box-shadow    : 3px 3px 3px #666666;  /* 影の設定 */
+  border        : 2px solid #000066;
+  margin: 5px;
+}
+
+.btn_slc {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 18pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 5px 5px;   /* 余白       */
+  background    : #f0b65f;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  box-shadow    : 2px 2px 2px #666666;  /* 影の設定 */
+  border        : 2px solid #f0b65f;
+  margin: 5px;
+}
+
+.back_btn:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : gray;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+
+.btn:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #000066;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+
+.btn_slc:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #f0b65f;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+
 @media screen and (min-width: 600px) {
   main {
     width: 70%;

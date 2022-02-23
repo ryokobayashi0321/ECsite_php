@@ -9,25 +9,24 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
+    <?php if (!isset($_SESSION['member_login'])): ?>
+        <p class="error text">ログインしてください</p><br><br>
+        <a class="btn" href="../member_login/member_login.php">ログイン画面へ</a>
+        <a class="back_btn" href="shop_list.php">TOP画面へ</a>
+        <?php exit(); ?>
+    <?php elseif (isset($_SESSION['member_login'])): ?>
+        <?php echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL; ?>
+        <a href="../member_login/member_logout.php">ログアウト</a>
+        <br><br>
+    <?php endif; ?>
+
+    <?php if (!isset($_SESSION['cart'])): ?>
+        <div class="error">カートに商品はありません</div><br><br>
+        <a class="back_btn" href="shop_list.php">商品一覧へ戻る</a>
+        <?php exit(); ?>
+    <?php endif; ?>
+
     <?php
-
-    if (!isset($_SESSION['member_login'])) {
-        echo 'ログインしてください<br><br>';
-        echo '<a href="../member_login/member_login.php">ログイン画面へ</a>';
-        echo '<br><br>';
-        echo '<a href="shop_list.php">TOP画面へ</a>';
-    exit();
-    } else if (isset($_SESSION['member_login'])) {
-        echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL;
-        echo '<a href="../member_login/member_logout.php">ログアウト</a>';
-        echo '<br><br>';
-    }
-
-    if (!isset($_SESSION['cart'])) {
-        echo 'カートに商品はありません<br><br>';
-        echo '<a href="shop_list.php">商品一覧へ戻る</a>';
-        exit();
-    }
 
     try {
         $cart = $_SESSION['cart'];
@@ -49,6 +48,7 @@ include('../layouts/header.php');
             $price[] = $rec['price'];
             $img[] = $rec['img'];
         }
+
         $dbh = null;
 
     } catch (Exception $e) {
@@ -56,32 +56,38 @@ include('../layouts/header.php');
         echo '<a href ="../staff_login/staff_login.php">ログイン画面へ</a>';
     }
     ?>
-        <form action="shop_num.php" method="post">
-            カート一覧<br><br>
-            <?php
 
-            for ($i = 0; $i < $max; $i++) {
-                if (empty($img[$i]) === true) {
-                    $show_img = '';
-                } else {
-                    $show_img = '<img src="../product/img/'.$img[$i].'">';
-                }
-                echo $show_img . '<br>';
-                echo '商品名:' . $name[$i] . '<br>';
-                echo '価格:' . $price[$i] . '円<br>';
-                echo '数量: <input type="text" name="num'.$i.'" value="'.$num[$i].'"><br>';
-                echo '合計価格:' . $price[$i] * $num[$i] . '円<br>';
-                echo '削除: <input type="checkbox" name="delete'.$i.'"><br>';
-                echo '<br><br>';
-            }
-            ?>
+        <h3>カート一覧</h3><br>
+        <form action="shop_num.php" method="post">
+            <?php for ($i = 0; $i < $max; $i++): ?>
+                <?php if (empty($img[$i]) === true): ?>
+                    <?php $show_img = ''; ?>
+                <?php else: ?>
+                    <?php $show_img = '<img src="../product/img/'.$img[$i].'">'; ?>
+                <?php endif; ?>
+                <div class="box">
+                    <div class="list">
+                        <div class="img"><?php echo $show_img; ?></div>
+                        <br>
+                        <div class="npe">
+                            <div>商品名：<?php echo $rec['name']; ?></div>
+                            <div>価格：<?php echo $rec['price']; ?>円</div>
+                            <div>詳細：<?php echo $rec['explanation']; ?></div>
+                            <div>数量：<input type="text" name="num<?php echo $i; ?>" value="<?php echo $num[$i]; ?>"></div>
+                            <div>合計価格：<?php echo $price[$i] * $num[$i]; ?>円</div>
+                            <div>削除：<input type="checkbox" name="<?php echo 'delete'. $i; ?>'"></div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            <?php endfor; ?>
             <input type="hidden" name="max" value="<?php echo $max; ?>">
-            <input type="submit" value="数量変更/削除">
+            <input class="btn_slc" type="submit" value="数量変更/削除">
             <br><br>
         </form>
-        <a href="shop_form_check.php">ご購入手続きへ進む</a>
-        <br>
-        <a href="shop_list.php">トップへ戻る</a>
+        <a class="back_btn" href="shop_list.php">トップへ戻る</a>
+        <a class="btn" href="shop_form_check.php">ご購入手続きへ進む</a>
+        <br><br>
     </main>
     <?php include('../layouts/aside.php'); ?>
 </div>

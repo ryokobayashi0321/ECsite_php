@@ -1,20 +1,22 @@
 <?php
 
+session_start();
+session_regenerate_id(true);
+
 $title = 'スタッフチェック';
 include('../layouts/header.php');
 ?>
 
 <div class="container">
     <main>
-    <?php
 
-    session_start();
-    session_regenerate_id(true);
-    if (isset($_SESSION['login']) === false) {
-        echo 'ログインしていません。' . PHP_EOL;
-        echo '<a href="staff_login.php">ログイン画面へ</a>';
-        exit();
-    }
+    <?php if (!isset($_SESSION['login'])): ?>
+        <div class="error">ログインしていません。</div><br>
+        <a href="staff_login.php">ログイン画面へ</a>
+        <?php exit(); ?>
+    <?php endif; ?>
+
+    <?php
 
     if (isset($_POST['add']) === true) {
         header('Location:staff_add.php');

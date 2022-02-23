@@ -9,19 +9,18 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-    <?php
+    <?php if (!isset($_SESSION['member_login'])): ?>
+        <div class="error text">ログインしてください</div><br><br>
+        <a class="btn" href="../member_login/member_login.php">ログイン画面へ</a>
+        <a class="back_btn" href="shop_list.php">TOP画面へ</a>
+        <?php exit(); ?>
+    <?php elseif (isset($_SESSION['member_login'])): ?>
+        <?php echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL; ?>
+        <a href="../member_login/member_logout.php">ログアウト</a>
+        <br><br>
+    <?php endif; ?>
 
-    if (!isset($_SESSION['member_login'])) {
-        echo 'ログインしてください<br><br>';
-        echo '<a href="../member_login/member_login.php">ログイン画面へ</a>';
-        echo '<br><br>';
-        echo '<a href="shop_list.php">TOP画面へ</a>';
-        exit();
-    } else if (isset($_SESSION['member_login'])) {
-        echo 'ようこそ、' . $_SESSION['member_name'] . '様' . PHP_EOL;
-        echo '<a href="../member_login/member_logout.php">ログアウト</a>';
-        echo '<br><br>';
-    }
+    <?php
 
     try {
         require_once('../common/common.php');
@@ -133,7 +132,7 @@ include('../layouts/header.php');
         <br>
         <?php $_SESSION['cart'] = array(); ?>
         <?php $_SESSION['num'] = array(); ?>
-        <a href="shop_list.php">商品一覧へ</a>
+        <p class="top_btn"><a class="back_btn" href="shop_list.php">トップへ戻る</a></p>
     </main>
     <?php include('../layouts/aside.php'); ?>
 </div>
