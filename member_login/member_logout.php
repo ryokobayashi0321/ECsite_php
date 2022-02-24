@@ -13,9 +13,9 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-        ログアウトしました。
+        <p class="error text">ログアウトしました。</p>
         <br><br>
-        <a href="../shop/shop_list.php">TOPへ</a>
+        <a class="back_btn" href="../shop/shop_list.php">TOPへ</a>
         <br><br>
     </main>
 </div>

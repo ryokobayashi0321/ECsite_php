@@ -6,30 +6,30 @@ include('../layouts/header.php');
 
 <div class="container">
     <main>
-        新規会員登録画面<br><br>
+        <h3>新規会員登録画面</h3><br>
         <form action="member_register_check.php" method="post">
-            お名前<br>
+            <div>お名前</div>
             <input type="text" name="name">
-            <br>
-            email<br>
+            <br><br>
+            <div>email</div>
             <input type="text" name="email">
-            <br>
-            住所<br>
+            <br><br>
+            <div>住所</div>
             <input type="text" name="address">
-            <br>
-            TEL<br>
+            <br><br>
+            <div>TEL</div>
             <input type="text" name="tel">
-            <br>
-            パスワード<br>
+            <br><br>
+            <div>パスワード</div>
             <input type="password" name="pass">
-            <br>
-            パスワード再入力<br>
+            <br><br>
+            <div>パスワード再入力</div>
             <input type="password" name="pass2">
             <br><br>
-            <input type="button" onclick="history.back()" value="戻る">
-            <input type="submit" value="OK">
+            <input class="btn" type="submit" value="OK">
             <br><br>
         </form>
+        <a href="member_login.php">ログイン画面へ</a>
     </main>
 </div>
 

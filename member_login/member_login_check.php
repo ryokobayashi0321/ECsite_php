@@ -16,39 +16,46 @@ include('../layouts/header.php');
     $pass2 = $post['pass2'];
     $okFlag = true;
 
-    if (empty($email) === true) {
-        echo 'emailを入力してください<br>';
-        $okFlag = false;
-    }
-
-    if (preg_match('/\A[\w\-\.]+\@[\w\-\.]+\.([a-z]+)\z/', $email) === 0) {
-        echo '正しいemailを入力してください<br>';
-        $okFlag = false;
-    }
-
-    if (empty($pass) === true) {
-        echo 'パスワードを入力してください<br>';
-        $okFlag = false;
-    }
-
-    if ($pass !== $pass2) {
-        echo 'パスワードが異なります<br>';
-        $okFlag = false;
-    }
-
-    if ($okFlag === false) {
-        echo '<form><br>';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-    } else {
-        echo '下記emailアドレスでログインしますか?<br><br>';
-        echo $email . '<br><br>';
-        echo '<form action="member_login_done.php" method="post">';
-        echo '<input type="hidden" name="email" value="'. $email .'">';
-        echo '<input type="hidden" name="pass" value="'. $pass .'">';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-        echo '<input type="submit" value="ログイン">';
-    }
     ?>
+
+    <h3>ログイン確認</h3><br>
+
+    <?php if (empty($email) === true): ?>
+        <div class="error">emailを入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+
+    <?php if (preg_match('/\A[\w\-\.]+\@[\w\-\.]+\.([a-z]+)\z/', $email) === 0): ?>
+        <div class="error">正しいemailを入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+        <?php if (empty($pass) === true): ?>
+        <div class="error">パスワードを入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if ($pass !== $pass2): ?>
+        <div class="error">パスワードが異なります</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if ($okFlag === false): ?>
+        <form>
+            <br><br>
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+        </form>
+    <?php else: ?>
+        <div>下記emailアドレスでログインしますか?</div><br>
+        <div>【email】<?php echo $email; ?></div>
+        <form action="member_login_done.php" method="post">
+            <input type="hidden" name="email" value="<?php echo $email; ?>">
+            <input type="hidden" name="pass" value="<?php echo $pass; ?>">
+            <br><br>
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+            <input class="btn" type="submit" value="ログイン">
+        <?php endif; ?>
     </main>
 </div>
 

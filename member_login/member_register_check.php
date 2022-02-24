@@ -1,6 +1,6 @@
 <?php
 
-$title = '新規登録チェック';
+$title = '新規登録確認';
 include('../layouts/header.php');
 ?>
 
@@ -19,65 +19,73 @@ include('../layouts/header.php');
     $pass2 = $post['pass2'];
     $okFlag = true;
 
-    if (empty($name) === true) {
-        echo 'お名前を入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if (empty($email) === true) {
-        echo 'emailを入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if (preg_match('/\A[\w\-\.]+\@[\w\-\.]+\.([a-z]+)\z/', $email) === 0) {
-        echo '正しいemailを入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if (empty($address) === true) {
-        echo '住所を入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if (empty($tel) === true) {
-        echo '電話番号を入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if (preg_match('/\A\d{2,5}-?\d{2,5}-?\d{4,5}\z/', $tel) === 0) {
-        echo '正しい電話番号を入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if (empty($pass) === true) {
-        echo 'パスワードを入力してください<br><br>';
-        $okFlag = false;
-    }
-
-    if ($pass !== $pass2) {
-        echo 'パスワードが異なります<br><br>';
-        $okFlag = false;
-    }
-
-    if ($okFlag === false) {
-        echo '<form><br>';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-    } else {
-        echo '下記内容で登録しますか?<br><br>';
-        echo $name . '<br><br>';
-        echo $email . '<br><br>';
-        echo $address . '<br><br>';
-        echo $tel . '<br><br>';
-        echo '<form action="member_register_done.php" method="post">';
-        echo '<input type="hidden" name="name" value="'.$name.'">';
-        echo '<input type="hidden" name="email" value="'.$email.'">';
-        echo '<input type="hidden" name="address" value="'.$address.'">';
-        echo '<input type="hidden" name="tel" value="'.$tel.'">';
-        echo '<input type="hidden" name="pass" value="'.$pass.'">';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
-        echo '<input type="submit" value="登録">';
-    }
     ?>
+    <h3>新規登録確認</h3><br>
+
+    <?php if (empty($name) === true): ?>
+        <div class="error">お名前を入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if (empty($email) === true): ?>
+        <div class="error">emailを入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif ?>
+
+    <?php if (preg_match('/\A[\w\-\.]+\@[\w\-\.]+\.([a-z]+)\z/', $email) === 0): ?>
+        <div class="error">正しいemailを入力してください</div>
+    <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+
+    <?php if (empty($address) === true): ?>
+        <div class="error">住所を入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if (empty($tel) === true): ?>
+        <div class="error">電話番号を入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if (preg_match('/\A\d{2,5}-?\d{2,5}-?\d{4,5}\z/', $tel) === 0): ?>
+        <div class="error">正しい電話番号を入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if (empty($pass) === true): ?>
+        <div class="error">パスワードを入力してください</div>
+        <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+    <?php if ($pass !== $pass2): ?>
+        <div class="error">パスワードが異なります</div>
+    <?php $okFlag = false; ?>
+    <?php endif; ?>
+
+
+    <?php if ($okFlag === false): ?>
+        <form>
+            <br><br>
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+        </form>
+    <?php else: ?>
+        <div>下記内容で登録しますか</div><br>
+        <div>【お名前】<?php echo $name; ?></div>
+        <div>【email】<?php echo $email; ?></div>
+        <div>【住所】<?php echo $address; ?></div>
+        <div>【TEL】<?php echo $tel; ?></div>
+        <form action="member_register_done.php" method="post">
+            <input type="hidden" name="name" value="<?php echo $name; ?>">
+            <input type="hidden" name="email" value="<?php echo $email; ?>">
+            <input type="hidden" name="address" value="<?php echo $address; ?>">
+            <input type="hidden" name="tel" value="<?php echo $tel; ?>">
+            <input type="hidden" name="pass" value="<?php echo $pass; ?>">
+            <br><br>
+            <input class="back_btn" type="button" onclick="history.back()" value="戻る">
+            <input class="btn" type="submit" value="登録">
+        </form>
+    <?php endif; ?>
     </main>
 </div>
 

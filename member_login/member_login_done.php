@@ -28,8 +28,8 @@ include('../layouts/header.php');
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (empty($rec['name']) === true) {
-            echo 'ログイン情報が間違っています。<br>';
-            echo '<a href="member_login.php">戻る</a>';
+            echo '<p class="error text">ログイン情報が間違っています。</p><br>';
+            echo '<a class="back_btn" href="member_login.php">戻る</a>';
             exit();
         }
 
@@ -37,12 +37,12 @@ include('../layouts/header.php');
         $_SESSION['member_login'] = 1;
         $_SESSION['member_name'] = $rec['name'];
         $_SESSION['member_code'] = $rec['code'];
-        echo 'ログイン成功<br><br>';
-        echo '<a href="../shop/shop_list.php">トップへ戻る</a>';
+        echo '<p class="text">ログイン成功</p><br>';
+        echo '<a class="back_btn" href="../shop/shop_list.php">トップへ</a>';
 
     } catch (Exception $e) {
         echo '只今障害が発生しております。' . PHP_EOL;
-        echo '<a href ="member_login.php">ログイン画面へ</a>';
+        echo '<a class="back_btn" href ="member_login.php">ログイン画面へ</a>';
     }
     ?>
     </main>

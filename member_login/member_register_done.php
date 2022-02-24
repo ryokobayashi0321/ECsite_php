@@ -38,9 +38,10 @@ include('../layouts/header.php');
         }
 
         if (in_array($email, $mail) === true) {
-            echo '既に使われているmailアドレスです<br><br>';
-            echo '<a href="member_register.php">トップへ戻る</a>';
+            echo '<div class="error text">既に使われているmailアドレスです</div><br>';
+            echo '<a class="back_btn" href="member_register.php">トップへ戻る</a>';
             $dbh = null;
+            exit();
         } else {
             $sql = 'INSERT INTO member(name, email, address, tel, password) VALUE (?, ?, ?, ?, ?)';
             $stmt = $dbh->prepare($sql);
@@ -53,12 +54,12 @@ include('../layouts/header.php');
 
             $dbh = null;
 
-            echo '登録完了しました。<br><br>';
-            echo '<a href="../shop/shop_list.php">トップへ戻る</a>';
+            echo '<p class="text">登録完了しました。</p><br>';
+            echo '<a class="back_btn" href="../shop/shop_list.php">トップへ戻る</a>';
         }
     } catch (Exception $e) {
         echo '只今障害が発生しております。' . PHP_EOL;
-        echo '<a href ="member_register.php">ログイン画面へ</a>';
+        echo '<a class="back_btn" href ="member_register.php">ログイン画面へ</a>';
         exit();
     }
     ?>
